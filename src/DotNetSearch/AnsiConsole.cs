@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Originally copied from: https://github.com/dotnet/templating/blob/master/src/Microsoft.TemplateEngine.Cli/AnsiConsole.cs
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;

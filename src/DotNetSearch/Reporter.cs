@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Originally copied from: https://github.com/dotnet/templating/blob/master/src/Microsoft.TemplateEngine.Cli/Reporter.cs
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
