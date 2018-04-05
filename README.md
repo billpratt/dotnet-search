@@ -1,16 +1,37 @@
 dotnet-search
 ============
 
+[![NuGet][main-nuget-badge]][main-nuget] [![NuGet][nuget-dl-badge]][main-nuget]
+
+[main-nuget]: https://www.nuget.org/packages/dotnet-search/
+[main-nuget-badge]: https://img.shields.io/nuget/v/dotnet-search.svg?style=flat-square&label=nuget
+[nuget-dl-badge]: https://img.shields.io/nuget/dt/dotnet-search.svg?style=flat-square
+
+
 Search for Nuget packages using the .NET Core CLI.
 
 ## Installation
 
-The latest release of dotnet-search requires the [2.1.300-preview1](https://www.microsoft.com/net/download/dotnet-core/sdk-2.1.300-preview1) .NET Core SDK or newer.
-Once installed, run this command:
-
+### .NET Core 2.1 & higher
 ```
 dotnet install tool --global dotnet-search
 ```
+
+### Uninstall
+
+.NET Core 2.1 preview 1 does not have a way to uninstall yet. For now, you'll have to remove the files from the following paths:
+
+```
+(Windows)
+%USERPROFILE%\.dotnet\tools\dotnet-search.exe
+%USERPROFILE%\.dotnet\tools\dotnet-search.config
+%USERPROFILE%\.dotnet\toolspkgs\dotnet-search\
+
+(macOS/Linux)
+$HOME/.dotnet/tools/dotnet-search
+$HOME/.dotnet/toolspkgs/dotnet-search/
+```
+
 
 ## Usage
 
