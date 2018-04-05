@@ -16,11 +16,10 @@ Example: dotnet search json.net</Description>
     <PackageProjectUrl>https://github.com/billpratt/dotnet-search</PackageProjectUrl>
     <RepositoryUrl>https://github.com/billpratt/dotnet-search</RepositoryUrl>
     <PackageTags>dotnet, search</PackageTags>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Authors>Bill Pratt</Authors>
     <Company />
     <Product />
-    <NETCorePlatformsImplicitPackageVersion>2.0.1</NETCorePlatformsImplicitPackageVersion>
   </PropertyGroup>
 
 

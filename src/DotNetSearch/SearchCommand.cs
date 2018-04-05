@@ -15,7 +15,7 @@ namespace DotNetSearch
         Description = "Search for Nuget packages"
     )]
     [HelpOption]
-    //[VersionOptionFromMember(MemberName = nameof(GetVersion))]
+    [VersionOptionFromMember(MemberName = nameof(GetVersion))]
     class SearchCommand
     {
         private static int MaxOutputStringLength = 20;
@@ -53,8 +53,8 @@ namespace DotNetSearch
                             ? $"{joined.Substring(0, MaxOutputStringLength - 1)}..."
                             : joined;
                 }},
-                { "Version", x => x.Version},
-                { "Downloads", x => x.TotalDownloads.ToString("#,#", CultureInfo.InvariantCulture) },
+                { "Current Version", x => x.Version},
+                { "Total Downloads", x => x.TotalDownloads.ToString("#,#", CultureInfo.InvariantCulture) },
                 { "Verified", x => x.Verified ? "    *" : "" }
             });
         }
