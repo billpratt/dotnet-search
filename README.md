@@ -16,23 +16,6 @@ Search for Nuget packages using the .NET Core CLI.
 ```
 dotnet install tool --global dotnet-search
 ```
-
-### Uninstall
-
-.NET Core 2.1 preview 1 does not have a way to uninstall yet. For now, you'll have to remove the files from the following paths:
-
-```
-(Windows)
-%USERPROFILE%\.dotnet\tools\dotnet-search.exe
-%USERPROFILE%\.dotnet\tools\dotnet-search.config
-%USERPROFILE%\.dotnet\toolspkgs\dotnet-search\
-
-(macOS/Linux)
-$HOME/.dotnet/tools/dotnet-search
-$HOME/.dotnet/toolspkgs/dotnet-search/
-```
-
-
 ## Usage
 
 ### Help
@@ -104,6 +87,21 @@ dotnet pack -c release -o nupkg
 ```
 
 Output is located in ```src/DotNetSearch/nupkg```
+
+### Uninstall
+
+.NET Core 2.1 preview 1 does not have a way to uninstall yet. For now, you'll have to remove the files from the following paths:
+
+```
+(Windows)
+%USERPROFILE%\.dotnet\tools\dotnet-search.exe
+%USERPROFILE%\.dotnet\tools\dotnet-search.config
+%USERPROFILE%\.dotnet\toolspkgs\dotnet-search\
+
+(macOS/Linux)
+$HOME/.dotnet/tools/dotnet-search
+$HOME/.dotnet/toolspkgs/dotnet-search/
+```
 
 ## Useful Links
 
