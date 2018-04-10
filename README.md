@@ -31,8 +31,11 @@ Arguments:
   query  The search terms used to find packages
 
 Options:
+  --version             Show version information
   -?|-h|--help          Show help information
   --include-prerelease  Include prerelease packages
+  -s|--skip             Number of results to skip. (Default: 0)
+  -t|--take             Number of results to display. (Default: 10)
 ```
 
 ### Search
@@ -40,28 +43,63 @@ Options:
 ```
 $ dotnet search json.net
 
-Name                                    Description              Authors                  Version          Downloads     Verified
-_________________________________________________________________________________________________________________________________
-Newtonsoft.Json                         Json.NET is a popul...   James Newton-King        11.0.2           112,705,018       *
-Json.NET.Web                            Json.NET web client      Caelan                   1.0.49           24,115
-Fluent-Json.NET                         See the project pag...   Miguel Angelo (masb...   0.2.0            1,130
-TagCache.Redis.Json.Net                 JSON.NET serializat...   Jon Menzies-Smith a...   1.0.0.2          1,091
-Fluent-Json.NET.Lib_v9                  Fluent configuratio...   Miguel Angelo (masb...   0.2.1            60
-Fluent-Json.NET.Lib_v10                 Fluent configuratio...   Miguel Angelo (masb...   0.2.1            51
-NanoMessageBus.Json.NET                 Additional serializ...   Jonathan Oliver          2.0.51           12,876
-SOLIDplate.Json.Net                     A set of boilerplat...   Afzal Hassen             1.0.0.10         1,516
-Json.Net.Unity3D                        Forked Newtonsoft.J...   Esun Kim                 9.0.1            582
-Invisual.Serialization.Json.Net         Json Serializer bui...   Invisual                 3.0.5886.24324   451
-CUL.JSON.Net                            Craig's Utility Lib...   James Craig              4.0.304          5,023
-Json.NET.ContractResolverExtentions     Contract resolver e...   Raphael Haddad           1.0.1            2,761
-Json.Net.Proprety.ToPascalCase          This is a diagnosti...   tanaka_733               1.0.0            791
-JWT.DNX.Json.Net                        THIS PACKAGE IS NOW...   John Sheehan, Micha...   1.0.0.1          1,032
-Json.NET.Unsigned                       Newtonsoft.Json - U...   OmniBean                 1.0.0            1,113
-jwt.dotnetstandard.json-net             Json.NET Serializer...   John Sheehan, Micha...   0.0.1            7,422
-WcfJsonNetFormatter                     WcfJsonNetFormatter...   The Hunter               1.4.0.1          7,639
-Thot.Json.Net                           Elm inspire encoder...   Maxime Mangel            1.0.1            148
-FM.JsonNet                              A library for .NET ...   Frozen Mountain Sof...   2.9.32           9,687
-JsonNet.PrivatePropertySetterResolver   Have JSON.Net deser...   Petar Vujic              1.0.0            192
+Name                              Description                 Authors                     Version          Downloads   Verified
+_______________________________________________________________________________________________________________________________
+Newtonsoft.Json                   Json.NET is a               James Newton-King           11.0.2           113.78M        *
+                                  popular
+                                  high-performance
+                                  JSON framework for
+                                  .NET
+-------------------------------------------------------------------------------------------------------------------------------
+Json.NET.Web                      Json.NET web client         Caelan                      1.0.49           24.32K
+-------------------------------------------------------------------------------------------------------------------------------
+Fluent-Json.NET                   See the project page        Miguel Angelo (masbicudo)   0.2.0            1.14K
+                                  for more.
+-------------------------------------------------------------------------------------------------------------------------------
+TagCache.Redis.Json.Net           JSON.NET                    Jon Menzies-Smith           1.0.0.2          1.10K
+                                  serialization for           and Fabian Nicollier
+                                  TagCache.Redis
+-------------------------------------------------------------------------------------------------------------------------------
+Fluent-Json.NET.Lib_v10           Fluent configuration        Miguel Angelo (masbicudo)   0.2.1            51
+                                  for Json.NET v10
+                                  library. Tried to
+                                  follow Fluent
+                                  NHibernate mapping
+                                  style. Implemented
+                                  as converter and
+                                  contract resolver.
+-------------------------------------------------------------------------------------------------------------------------------
+Fluent-Json.NET.Lib_v9            Fluent configuration        Miguel Angelo (masbicudo)   0.2.1            60
+                                  for Json.NET v9
+                                  library. Tried to
+                                  follow Fluent
+                                  NHibernate mapping
+                                  style. Implemented
+                                  as converter and
+                                  contract resolver.
+-------------------------------------------------------------------------------------------------------------------------------
+NanoMessageBus.Json.NET           Additional                  Jonathan Oliver             2.0.51           13.01K
+                                  serialization
+                                  provider for
+                                  NanoMessageBus based
+                                  on the Newtonsoft
+                                  Json.NET library.
+-------------------------------------------------------------------------------------------------------------------------------
+SOLIDplate.Json.Net               A set of boilerplate        Afzal Hassen                1.0.0.10         1.54K
+                                  code libraries that
+                                  facilitate
+                                  implementation of
+                                  S.O.L.I.D principles
+                                  in .Net solutions
+-------------------------------------------------------------------------------------------------------------------------------
+Json.Net.Unity3D                  Forked                      Esun Kim                    9.0.1            627
+                                  Newtonsoft.Json to
+                                  support Unity3D
+-------------------------------------------------------------------------------------------------------------------------------
+Invisual.Serialization.Json.Net   Json Serializer             Invisual                    3.0.5886.24324   456
+                                  built with Json.Net
+
+1 - 10 of 259 results
 ```
 
 ### Search including prerelease
@@ -69,9 +107,18 @@ JsonNet.PrivatePropertySetterResolver   Have JSON.Net deser...   Petar Vujic    
 ```
 $ dotnet search microsoft.aspnetcore.all --include-prerelease
 
-Name                       Description              Authors     Version                Downloads   Verified
-___________________________________________________________________________________________________________
-Microsoft.AspNetCore.All   Microsoft.AspNetCor...   Microsoft   2.1.0-preview1-final   2,137,755       *
+Name                       Description                Authors     Version                Downloads   Verified
+_____________________________________________________________________________________________________________
+Microsoft.AspNetCore.All   Microsoft.AspNetCore.All   Microsoft   2.1.0-preview2-final   2.23M          *
+
+1 - 1 of 1 results
+```
+
+### Pagination
+```
+$ dotnet search [query] --skip 10             # skip 10, take default
+$ dotnet search [query] --take 50             # skip 0, take 50
+$ dotnet search [query] --skip 10 --take 50   # skip 10, take 50
 ```
 
 ## Build
