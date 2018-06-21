@@ -14,7 +14,7 @@ Search for Nuget packages using the .NET Core CLI.
 
 ### .NET Core 2.1 & higher
 ```
-dotnet install tool --global dotnet-search
+dotnet tool install --global dotnet-search
 ```
 ## Usage
 
