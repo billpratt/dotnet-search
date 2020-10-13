@@ -7,6 +7,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using DotNetSearch.Extensions;
 using McMaster.Extensions.CommandLineUtils;
+using System.IO;
+using System.Text;
+using System.Xml;
+using Newtonsoft.Json;
 
 namespace DotNetSearch
 {
@@ -37,6 +41,15 @@ namespace DotNetSearch
         [Option("-t|--take", "Number of results to display. (Default: 10)", CommandOptionType.SingleValue)]
         public int Take { get; set; } = TakeDefault;
 
+        [Option("-f|--format", "Output format. (Default: table, possible values are table, json, xml)", CommandOptionType.SingleValue)]
+        public string Format { get; set; }
+
+        [Option("-u|--utf8", "Output UTF-8 instead of system default encoding.(no bom)", CommandOptionType.NoValue)]
+        public bool IsUtf8 { get; set; }
+
+        [Option("-o|--output", "Output file path. (Default: stdout)", CommandOptionType.SingleValue)]
+        public string OutputPath { get; set; }
+
         private async Task OnExecuteAsync()
         {
             var httpClient = new HttpClient();
@@ -53,18 +66,172 @@ namespace DotNetSearch
             PrintResults(searchResponse);
         }
 
+        Stream OpenOutputStream(bool overwrite)
+        {
+            if (!string.IsNullOrEmpty(OutputPath))
+            {
+                if(overwrite)
+                {
+                    return File.Create(OutputPath);
+                }
+                else
+                {
+                    var ret = File.OpenWrite(OutputPath);
+                    ret.Seek(0, SeekOrigin.End);
+                    return ret;
+                }
+            }
+            else
+            {
+                return Console.OpenStandardOutput(4096);
+            }
+        }
+
+        Encoding GetOutputEncoding()
+        {
+            if (IsUtf8)
+            {
+                return new UTF8Encoding(false);
+            }
+            else
+            {
+                return Encoding.Default;
+            }
+        }
+
         private void PrintResults(SearchResponse searchResponse)
         {
-            PrintTable(searchResponse);
+            var fmt = !string.IsNullOrEmpty(Format) ? Format : "table";
+            switch (fmt)
+            {
+                case "json":
+                    PrintJson(searchResponse);
+                    break;
+                case "xml":
+                    PrintXml(searchResponse);
+                    break;
+                case "table":
+                default:
+                    {
+                        PrintTable(searchResponse);
 
-            var numResultsToDisplay = Take < searchResponse.TotalHits ? Take : searchResponse.TotalHits;
-            var starting = Skip + 1;
-            var page = (Skip + Take) / Take;
-            var ending = page * Take;
-            if (ending > searchResponse.TotalHits)
-                ending = searchResponse.TotalHits;
-            
-            Console.WriteLine($"{Skip+1} - {ending} of {searchResponse.TotalHits} results");
+                        var numResultsToDisplay = Take < searchResponse.TotalHits ? Take : searchResponse.TotalHits;
+                        var starting = Skip + 1;
+                        var page = (Skip + Take) / Take;
+                        var ending = page * Take;
+                        if (ending > searchResponse.TotalHits)
+                            ending = searchResponse.TotalHits;
+
+                        using (var stm = OpenOutputStream(false))
+                        using (var tw = new StreamWriter(stm, GetOutputEncoding()))
+                        {
+                            tw.WriteLine($"{Skip + 1} - {ending} of {searchResponse.TotalHits} results");
+                        }
+                    }
+                    break;
+            }
+        }
+
+        static int GetActualResults(int skip, int take, int totalHits)
+        {
+            if(skip >= totalHits)
+            {
+                return 0;
+            }
+            if(skip + take > totalHits)
+            {
+                return totalHits - skip;
+            }
+            else
+            {
+                return take;
+            }
+        }
+
+        private void PrintXml(SearchResponse searchResponse)
+        {
+            var xwsetting = new XmlWriterSettings();
+            xwsetting.Indent = true;
+            using (var stm = OpenOutputStream(true))
+            using (var tw = new StreamWriter(stm, GetOutputEncoding()))
+            using (var xw = XmlWriter.Create(tw, xwsetting))
+            {
+                xw.WriteStartDocument();
+                xw.WriteStartElement("results");
+                xw.WriteStartElement("packages");
+                xw.WriteAttributeString("total", searchResponse.TotalHits.ToString());
+                xw.WriteAttributeString("skip", Skip.ToString());
+                xw.WriteAttributeString("take", GetActualResults(Skip, Take, searchResponse.TotalHits).ToString());
+                foreach (var pkg in searchResponse.Data)
+                {
+                    xw.WriteStartElement("package");
+                    xw.WriteElementString("ApiId", pkg.ApiId);
+                    xw.WriteStartElement("Authors");
+                    foreach (var author in pkg.Authors)
+                    {
+                        xw.WriteElementString("Author", author);
+                    }
+                    xw.WriteEndElement(); // Authors
+                    xw.WriteElementString("Descritpion", pkg.Description);
+                    xw.WriteElementString("IconUrl", pkg.IconUrl);
+                    xw.WriteElementString("Id", pkg.Id);
+                    xw.WriteElementString("LicenseUrl", pkg.LicenseUrl);
+                    xw.WriteElementString("ProjectUrl", pkg.ProjectUrl);
+                    xw.WriteElementString("Registration", pkg.Registration);
+                    xw.WriteElementString("Summary", pkg.Summary);
+                    xw.WriteStartElement("Tags");
+                    foreach (var tag in pkg.Tags)
+                    {
+                        xw.WriteElementString("Tag", tag);
+                    }
+                    xw.WriteEndElement(); // Tags
+                    xw.WriteElementString("Title", pkg.Title);
+                    xw.WriteElementString("TotalDownloads", pkg.TotalDownloads.ToString());
+                    xw.WriteElementString("Type", pkg.Type);
+                    xw.WriteElementString("Verified", pkg.Verified.ToString());
+                    xw.WriteElementString("LatestVersion", pkg.Version);
+                    xw.WriteStartElement("Versions");
+                    foreach (var v in pkg.Versions)
+                    {
+                        xw.WriteStartElement("Version");
+                        xw.WriteElementString("Version", v.Version);
+                        xw.WriteElementString("Id", v.Id);
+                        xw.WriteElementString("Downloads", v.Downloads.ToString());
+                        xw.WriteEndElement();
+                    }
+                    xw.WriteEndElement(); // Versions
+                    xw.WriteEndElement(); // package
+                }
+                xw.WriteEndElement();// packages
+                xw.WriteEndElement();// results
+                xw.WriteEndDocument();
+            }
+        }
+
+        private void PrintJson(SearchResponse searchResponse)
+        {
+            using (var stm = OpenOutputStream(true))
+            using (var tw = new StreamWriter(stm, GetOutputEncoding()))
+            using (var jw = new JsonTextWriter(tw))
+            {
+                jw.Formatting = Newtonsoft.Json.Formatting.Indented;
+                jw.WriteStartObject();
+                jw.WritePropertyName("total");
+                jw.WriteValue(searchResponse.TotalHits);
+                jw.WritePropertyName("skip");
+                jw.WriteValue(Skip);
+                jw.WritePropertyName("take");
+                jw.WriteValue(GetActualResults(Skip, Take, searchResponse.TotalHits));
+                jw.WritePropertyName("packages");
+                jw.WriteStartArray();
+                var serializer = new JsonSerializer();
+                foreach (var pkg in searchResponse.Data)
+                {
+                    serializer.Serialize(jw, pkg);
+                }
+                jw.WriteEndArray();
+                jw.WriteEndObject(); // root
+            }
         }
 
         private void PrintTable(SearchResponse searchResponse)
@@ -166,47 +333,51 @@ namespace DotNetSearch
 
             // Print output
 
-            //Print headers
-            for (var i = 0; i < headers.Length; i++)
+            using (var stm = OpenOutputStream(true))
+            using (var tw = new StreamWriter(stm, GetOutputEncoding()))
             {
-                Console.Write(headers[i].PadRight(columnWidths[i]));
-
-                if (i < headers.Length - 1)
-                    Console.Write(columnPad);
-            }
-
-            Console.WriteLine();
-
-            // Print header border
-            Console.WriteLine("".PadRight(headerWidth, headerBoarder));
-
-            // Print rows
-            for (var i = 0; i < rows.Count; i++)
-            {
-                int j = 0;
-                for (; j < columns.Length; j++)
+                //Print headers
+                for (var i = 0; i < headers.Length; i++)
                 {
-                    var value = rows[i][j] ?? "";
+                    tw.Write(headers[i].PadRight(columnWidths[i]));
 
-                    if (j == 0 && i > 0 && !string.IsNullOrEmpty(value))
-                    {
-                        // We found a new package. Print divider
-                        Console.WriteLine("".PadRight(headerWidth, rowDivider));
-
-                    }
-
-                    Console.Write(value.PadRight(columnWidths[j]));
-
-                    if (j < columnWidths.Length - 1)
-                    {
-                        Console.Write(columnPad);
-                    }
+                    if (i < headers.Length - 1)
+                        tw.Write(columnPad);
                 }
 
-                Console.WriteLine();
-            }
+                tw.WriteLine();
 
-            Console.WriteLine();
+                // Print header border
+                tw.WriteLine("".PadRight(headerWidth, headerBoarder));
+
+                // Print rows
+                for (var i = 0; i < rows.Count; i++)
+                {
+                    int j = 0;
+                    for (; j < columns.Length; j++)
+                    {
+                        var value = rows[i][j] ?? "";
+
+                        if (j == 0 && i > 0 && !string.IsNullOrEmpty(value))
+                        {
+                            // We found a new package. Print divider
+                            tw.WriteLine("".PadRight(headerWidth, rowDivider));
+
+                        }
+
+                        tw.Write(value.PadRight(columnWidths[j]));
+
+                        if (j < columnWidths.Length - 1)
+                        {
+                            tw.Write(columnPad);
+                        }
+                    }
+
+                    tw.WriteLine();
+                }
+
+                tw.WriteLine();
+            }
         }
 
         private static List<string> GetWordWrapRows(string value)
