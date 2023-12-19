@@ -5,19 +5,19 @@
     <TargetFramework>net6.0</TargetFramework>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
-    <AssemblyName>dotnet-search</AssemblyName>
-    <Description>Search for Nuget packages using the .NET Core CLI
+    <AssemblyName>dotnet-nuget-search</AssemblyName>
+    <Description>Search for Nuget packages using the .NET CLI
 
-Example: dotnet search json.net</Description>
+Example: dotnet nuget-search json.net</Description>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <DebugType>portable</DebugType>
-    <PackageLicenseUrl>https://github.com/billpratt/dotnet-search/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/billpratt/dotnet-search</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/billpratt/dotnet-search</RepositoryUrl>
-    <PackageTags>dotnet, search</PackageTags>
-    <Version>1.1.0</Version>
-    <Authors>Bill Pratt</Authors>
+    <PackageLicense>https://github.com/lucaslra/dotnet-nuget-search/blob/master/LICENSE</PackageLicense>
+    <PackageProjectUrl>https://github.com/lucaslra/dotnet-nuget-search</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lucaslra/dotnet-nuget-search</RepositoryUrl>
+    <PackageTags>dotnet; nuget; search</PackageTags>
+    <Version>1.0.0</Version>
+    <Authors>Bill Pratt; Lucas Araujo</Authors>
     <LangVersion>default</LangVersion>
   </PropertyGroup>
 

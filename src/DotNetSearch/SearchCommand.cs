@@ -3,8 +3,8 @@ using DotNetSearch.Services;
 namespace DotNetSearch;
 
 [Command(
-    Name = "dotnet search",
-    FullName = "dotnet-search",
+    Name = "dotnet nuget-search",
+    FullName = "dotnet-nuget-search",
     Description = "Search for Nuget packages"
 )]
 [HelpOption]

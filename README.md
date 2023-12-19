@@ -1,11 +1,7 @@
-dotnet-search
+dotnet-nuget-search
 ============
 
 [![NuGet][main-nuget-badge]][main-nuget] [![NuGet][nuget-dl-badge]][main-nuget]
-
-[main-nuget]: https://www.nuget.org/packages/dotnet-search/
-[main-nuget-badge]: https://img.shields.io/nuget/v/dotnet-search.svg?style=flat-square&label=nuget
-[nuget-dl-badge]: https://img.shields.io/nuget/dt/dotnet-search.svg?style=flat-square
 
 
 Search for Nuget packages using the .NET Core CLI.
@@ -14,18 +10,18 @@ Search for Nuget packages using the .NET Core CLI.
 
 ### .NET Core 2.1 & higher
 ```
-dotnet tool install --global dotnet-search
+dotnet tool install --global dotnet-nuget-search
 ```
 ## Usage
 
 ### Help
 
 ```
-$ dotnet search --help
+$ dotnet nuget-search --help
 
-dotnet-search
+dotnet-nuget-search
 
-Usage: dotnet search [arguments] [options]
+Usage: dotnet nuget-search [arguments] [options]
 
 Arguments:
   query  The search terms used to find packages
@@ -124,7 +120,7 @@ $ dotnet search [query] --skip 10 --take 50   # skip 10, take 50
 ## Build
 
 ```
-git clone https://github.com/billpratt/dotnet-search
+clone this repo
 ```
 ```
 cd dotnet-search/src/DotNetSearch
@@ -138,7 +134,7 @@ Output is located in ```src/DotNetSearch/nupkg```
 ### Uninstall
 
 ```
-dotnet tool uninstall -g dotnet-search
+dotnet tool uninstall -g dotnet-nuget-search
 ```
 
 ## Useful Links
