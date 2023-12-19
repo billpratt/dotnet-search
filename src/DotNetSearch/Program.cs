@@ -1,46 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using McMaster.Extensions.CommandLineUtils;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using DotNetSearch.Services;
 
-namespace DotNetSearch
+namespace DotNetSearch;
+
+public class Program
 {
-    class Program
+    [Conditional("DEBUG")]
+    private static void ReadArgs(ref string[] args)
     {
-        static int Main(string[] args)
+        var input = Prompt.GetString("> ");
+        var inputSplit = input?.Split(' ') ?? new string[1];
+
+        switch (inputSplit[0])
         {
-#if DEBUG
-            while (true)
-            {
-                var input = Prompt.GetString("> ");
-                var inputSplit = input?.Split(' ') ?? new string[1];
-
-                if (inputSplit[0] == "clear")
-                {
-                    Console.Clear();
-                    continue;
-                }
-                else if (inputSplit[0] == "exit")
-                {
-                    // Exit out
-                    return 0;
-                }
-
-                var result = RunApp(inputSplit).GetAwaiter().GetResult();
-            }
-#else
-            return RunApp(args).GetAwaiter().GetResult();
-#endif
+            case "clear":
+                Console.Clear();
+                break;
+            case "exit":
+                // Exit out
+                Environment.Exit(0);
+                break;
+            default:
+                args = inputSplit;
+                break;
         }
+    }
 
-        private static async Task<int> RunApp(string[] args)
+    public static async Task<int> Main(string[] args)
+    {
+        ReadArgs(ref args);
+
+        try
         {
-            return await CommandLineApplication.ExecuteAsync<SearchCommand>(args);
+            return await Host.CreateDefaultBuilder(args)
+                .UseConsoleLifetime()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    if (!args.Contains("--verbose") && !args.Contains("-v")) return;
+                    logging.AddConsole();
+                    logging.SetMinimumLevel(LogLevel.Debug);
+                })
+                .ConfigureServices((_, services) =>
+                {
+                    services.AddHttpClient<SearchCommand>();
+                    services.AddSingleton<NugetIndexReader>();
+                })
+                .RunCommandLineApplicationAsync<SearchCommand>(args)
+                .ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error {e.Message}");
+            return 1;
         }
     }
 }
