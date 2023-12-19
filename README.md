@@ -3,12 +3,11 @@ dotnet-nuget-search
 
 [![NuGet][main-nuget-badge]][main-nuget] [![NuGet][nuget-dl-badge]][main-nuget]
 
-
-Search for Nuget packages using the .NET Core CLI.
+Search for Nuget packages using the .NET CLI.
 
 ## Installation
 
-### .NET Core 2.1 & higher
+### .NET 6 or higher
 ```
 dotnet tool install --global dotnet-nuget-search
 ```
@@ -120,7 +119,7 @@ $ dotnet search [query] --skip 10 --take 50   # skip 10, take 50
 ## Build
 
 ```
-clone this repo
+git clone https://github.com/lucaslra/dotnet-nuget-search
 ```
 ```
 cd dotnet-search/src/DotNetSearch
@@ -136,9 +135,3 @@ Output is located in ```src/DotNetSearch/nupkg```
 ```
 dotnet tool uninstall -g dotnet-nuget-search
 ```
-
-## Useful Links
-
-* [.NET Core 2.1 Global Tools Annoucement](https://blogs.msdn.microsoft.com/dotnet/2018/02/27/announcing-net-core-2-1-preview-1/#global-tools)
-* [.NET Core Global Tools Sample](https://github.com/dotnet/core/blob/master/samples/dotnetsay/README.md)
-* [.NET Core Global Tools and Gotchas](https://www.natemcmaster.com/blog/2018/02/02/dotnet-global-tool/)
