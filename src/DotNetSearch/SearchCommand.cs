@@ -52,7 +52,7 @@ internal class SearchCommand
         var queryUrl = await GetQueryUrl();
 
         var url =
-            $"{queryUrl}?q={Query}&prerelease={IncludePrerelease}&skip={Skip}&take={Take}&packageType={PackageType}";
+            $"{queryUrl}?q={Query}&semVerLevel=2.0.0&prerelease={IncludePrerelease}&skip={Skip}&take={Take}&packageType={PackageType}";
         try
         {
             var response = await _httpClient.GetAsync(url);
