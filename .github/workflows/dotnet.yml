@@ -28,5 +28,7 @@ jobs:
         with:
           file: "NugetCliSearch/NugetCliSearch.csproj"
           version: bump-build
-#      - name: Publish to nuget.org
-#        run: dotnet nuget push NugetCliSearch/bin/Release/*.nupkg --source "github" --skip-duplicate
+      - name: Publish to nuget.org
+        if:
+          github.ref == 'refs/heads/main'
+        run: dotnet nuget push NugetCliSearch/bin/Release/*.nupkg --source "github" --skip-duplicate
