@@ -1,5 +1,8 @@
 # Changelog
 
+## [v2.0.2]
+Minor bug fixes
+
 ## [v2.0.1]
 Added support to SemVer Level 2.0.0
 

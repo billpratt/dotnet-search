@@ -8,15 +8,16 @@
     <AssemblyName>dotnet-nuget-search</AssemblyName>
     <Description>Search for Nuget packages using the .NET CLI
 
-Example: dotnet nuget-search json.net</Description>
+      Example: dotnet nuget-search json.net</Description>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <DebugType>portable</DebugType>
-    <PackageLicense>https://github.com/lucaslra/dotnet-nuget-search/blob/master/LICENSE</PackageLicense>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/lucaslra/dotnet-nuget-search</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lucaslra/dotnet-nuget-search</RepositoryUrl>
     <PackageTags>dotnet; nuget; search</PackageTags>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Authors>Bill Pratt; Lucas Araujo</Authors>
     <LangVersion>default</LangVersion>
   </PropertyGroup>
@@ -34,6 +35,7 @@ Example: dotnet nuget-search json.net</Description>
 
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

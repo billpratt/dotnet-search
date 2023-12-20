@@ -16,27 +16,27 @@ internal class SearchCommand
     private const int SKIP_RESULTS_DEFAULT = 0;
     private const int TAKE_DEFAULT = 10;
 
-    [Required]
     [Argument(0, "query", Description = "The search terms to used to filter packages")]
     public string Query { get; set; }
 
-    [Option("--include-prerelease", "Include prerelease packages", CommandOptionType.NoValue)]
-    public bool IncludePrerelease { get; set; }
+    [Option("-i|--include-prerelease", "Include prerelease packages", CommandOptionType.NoValue)]
+    public bool IncludePrerelease { get; set; } = false;
 
-    [Option("-s|--skip", "The number of results to skip, for pagination (Default: 0)", CommandOptionType.SingleValue)]
+    [Option("-s|--skip", "The number of results to skip, for pagination", CommandOptionType.SingleValue)]
     public int Skip { get; set; } = SKIP_RESULTS_DEFAULT;
 
-    [Option("-t|--take", "The number of results to return, for pagination (Default: 10)", CommandOptionType.SingleValue)]
+    [Option("-t|--take", "The number of results to return, for pagination", CommandOptionType.SingleValue)]
     public int Take { get; set; } = TAKE_DEFAULT;
 
     [Option("-p|--package-type", "The package type to use to filter packages", CommandOptionType.SingleValue)]
-    public string PackageType { get; set; } = "";
+    [AllowedValues("dependency", "dotnettool", "dotnetclitool", "template", "all")]
+    public string PackageType { get; set; } = "all";
 
     [Option("-l|--list", "Print results as full detail list", CommandOptionType.NoValue)]
-    public bool List { get; set; }
+    public bool List { get; set; } = false;
 
     [Option("-v|--verbose", "Prints all messages to standard output", CommandOptionType.NoValue)]
-    public bool Verbose { get; set; }
+    public bool Verbose { get; set; } = false;
 
     [Option("-r|--repository", "The repository to use for searching", CommandOptionType.SingleValue)]
     public string Repository { get; set; }
@@ -52,7 +52,7 @@ internal class SearchCommand
         var queryUrl = await GetQueryUrl();
 
         var url =
-            $"{queryUrl}?q={Query}&semVerLevel=2.0.0&prerelease={IncludePrerelease}&skip={Skip}&take={Take}&packageType={PackageType}";
+            $"{queryUrl}?q={Query}&semVerLevel=2.0.0&prerelease={IncludePrerelease}&skip={Skip}&take={Take}&packageType={(PackageType.ToLowerInvariant() == "all" ? "" : PackageType)}";
         try
         {
             var response = await _httpClient.GetAsync(url);
@@ -62,7 +62,7 @@ internal class SearchCommand
 
             if (!searchResponse.Data.Any())
             {
-                Console.WriteLine($"No results found for {Query}");
+                Console.WriteLine($"No results found for \"{Query}\"");
                 return;
             }
 

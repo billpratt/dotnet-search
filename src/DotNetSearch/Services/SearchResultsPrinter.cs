@@ -72,7 +72,9 @@ public class SearchResultsPrinter
                 TextWrap = TextWrap.WordWrap,
                 Width = 50
             });
-            tab.Children.Add(new Cell(string.Join(", ", x.Authors)) { Stroke = LineThickness.Single });
+            tab.Children.Add(new Cell(string.Join(", ", x.Authors)) { Stroke = LineThickness.Single,
+            TextWrap = TextWrap.WordWrap,
+            Width = 25 });
             tab.Children.Add(new Cell(string.Join(", ", x.PackageTypes.Select(y => y.Name)))
             {
                 Stroke = LineThickness.Single,
