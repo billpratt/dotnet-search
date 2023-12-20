@@ -8,7 +8,7 @@
     <AssemblyName>dotnet-nuget-search</AssemblyName>
     <Description>Search for Nuget packages using the .NET CLI
 
-      Example: dotnet nuget-search json.net</Description>
+      Example: dotnet nuget-search Netwonsoft</Description>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <DebugType>portable</DebugType>
@@ -18,7 +18,7 @@
     <RepositoryUrl>https://github.com/lucaslra/dotnet-nuget-search</RepositoryUrl>
     <PackageTags>dotnet; nuget; search</PackageTags>
     <Version>2.0.2</Version>
-    <Authors>Bill Pratt; Lucas Araujo</Authors>
+    <Authors>Lucas Araujo</Authors>
     <LangVersion>default</LangVersion>
   </PropertyGroup>
 
@@ -36,8 +36,5 @@
 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\"/>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
