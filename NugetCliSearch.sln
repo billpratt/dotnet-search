@@ -3,7 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetSearch", "DotNetSearch\DotNetSearch.csproj", "{53B2BE75-18D3-4B64-848C-6F9CCF823BB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NugetCliSearch", "NugetCliSearch\NugetCliSearch.csproj", "{53B2BE75-18D3-4B64-848C-6F9CCF823BB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{0B174053-5325-4BE9-AF59-6A0B893D69B0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CHANGELOG.md = CHANGELOG.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		global.json = global.json
+		README.md = README.md
+		.editorconfig = .editorconfig
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-namespace DotNetSearch.Services;
+namespace NugetCliSearch.Services;
 
 public class SearchResultsPrinter
 {

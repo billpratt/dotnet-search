@@ -1,6 +1,6 @@
-using DotNetSearch.Services;
+using NugetCliSearch.Services;
 
-namespace DotNetSearch;
+namespace NugetCliSearch;
 
 [Command(
     Name = "dotnet nuget-search",
@@ -13,8 +13,9 @@ internal class SearchCommand
 {
     private readonly HttpClient _httpClient;
     private readonly NugetIndexReader _nugetIndexReader;
-    private const int SKIP_RESULTS_DEFAULT = 0;
-    private const int TAKE_DEFAULT = 10;
+    
+    private const int SkipResultsDefault = 0;
+    private const int TakeDefault = 10;
 
     [Argument(0, "query", Description = "The search terms to used to filter packages")]
     public string Query { get; set; }
@@ -23,10 +24,10 @@ internal class SearchCommand
     public bool IncludePrerelease { get; set; } = false;
 
     [Option("-s|--skip", "The number of results to skip, for pagination", CommandOptionType.SingleValue)]
-    public int Skip { get; set; } = SKIP_RESULTS_DEFAULT;
+    public int Skip { get; set; } = SkipResultsDefault;
 
     [Option("-t|--take", "The number of results to return, for pagination", CommandOptionType.SingleValue)]
-    public int Take { get; set; } = TAKE_DEFAULT;
+    public int Take { get; set; } = TakeDefault;
 
     [Option("-p|--package-type", "The package type to use to filter packages", CommandOptionType.SingleValue)]
     [AllowedValues("dependency", "dotnettool", "dotnetclitool", "template", "all")]

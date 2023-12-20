@@ -1,6 +1,6 @@
-﻿using DotNetSearch.Services;
+﻿using NugetCliSearch.Services;
 
-namespace DotNetSearch;
+namespace NugetCliSearch;
 
 public class Program
 {
@@ -27,6 +27,7 @@ public class Program
 
     public static async Task<int> Main(string[] args)
     {
+        // for debugging purposes
         ReadArgs(ref args);
 
         try

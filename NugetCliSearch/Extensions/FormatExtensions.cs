@@ -1,4 +1,4 @@
-﻿namespace DotNetSearch.Extensions;
+﻿namespace NugetCliSearch.Extensions;
 
 public static class FormatExtensions
 {

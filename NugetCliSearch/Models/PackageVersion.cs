@@ -1,4 +1,4 @@
-namespace DotNetSearch.Models;
+namespace NugetCliSearch.Models;
 
 public class PackageVersion
 {
