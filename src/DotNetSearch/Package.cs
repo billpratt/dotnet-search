@@ -22,7 +22,7 @@ namespace DotNetSearch
         public string ProjectUrl { get; set; }
         public IEnumerable<string> Tags { get; set; }
         public IEnumerable<string> Authors { get; set; }
-        public int TotalDownloads { get; set; }
+        public long TotalDownloads { get; set; }
         public bool Verified { get; set; }
         public IEnumerable<PackageVersion> Versions { get; set; }
     }
