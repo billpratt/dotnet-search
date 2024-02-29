@@ -2,9 +2,9 @@
 
 namespace DotNetSearch.Extensions
 {
-    public static class IntegerFormatExtensions
+    public static class NumberFormatExtensions
     {
-        public static string ToAbbrString(this int value)
+        public static string ToAbbrString(this long value)
         {
             switch(value)
             {
