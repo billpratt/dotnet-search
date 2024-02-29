@@ -5,23 +5,30 @@
     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
+    <ToolCommandName>dotnet-search</ToolCommandName>
     <AssemblyName>dotnet-search</AssemblyName>
+    <Authors>Bill Pratt</Authors>
     <Description>Search for Nuget packages using the .NET Core CLI.
 
 Example: dotnet search json.net</Description>
+
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <DebugType>portable</DebugType>
-    <PackageLicenseUrl>https://github.com/billpratt/dotnet-search/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageId>dotnet-search</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/billpratt/dotnet-search</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/billpratt/dotnet-search</RepositoryUrl>
     <PackageTags>dotnet, search</PackageTags>
+    <PackageVersion>1.0.1</PackageVersion>
     <Version>1.0.1</Version>
-    <Authors>Bill Pratt</Authors>
-    <Company />
-    <Product />
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/billpratt/dotnet-search</RepositoryUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.1.0" />

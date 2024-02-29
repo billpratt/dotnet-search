@@ -12,9 +12,16 @@ Search for Nuget packages using the .NET Core CLI.
 
 ## Installation
 
-### .NET Core 2.1 & higher
-```
+Download and install the one of the currently supported [.NET SDKs](https://www.microsoft.com/net/download). Once installed, run the following command:
+
+```bash
 dotnet tool install --global dotnet-search
+```
+
+If you already have a previous version of **dotnet-search** installed, you can upgrade to the latest version using the following command:
+
+```bash
+dotnet tool update --global dotnet-search
 ```
 ## Usage
 
@@ -143,6 +150,5 @@ dotnet tool uninstall -g dotnet-search
 
 ## Useful Links
 
-* [.NET Core 2.1 Global Tools Annoucement](https://blogs.msdn.microsoft.com/dotnet/2018/02/27/announcing-net-core-2-1-preview-1/#global-tools)
-* [.NET Core Global Tools Sample](https://github.com/dotnet/core/blob/master/samples/dotnetsay/README.md)
+* [How to manage .NET tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools)
 * [.NET Core Global Tools and Gotchas](https://www.natemcmaster.com/blog/2018/02/02/dotnet-global-tool/)
